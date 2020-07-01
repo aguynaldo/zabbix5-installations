@@ -1,2 +1,2 @@
 # zabbix5-installations
- Multiplus way to install zabbix 5
+ Multiplus way to install zabbix 5 in Virtualbox VMs
