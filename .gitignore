@@ -351,3 +351,12 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+
+# vagrant 
+.vagrant/
+
+# env files
+.env
+
+# directory of KDE
+.directory

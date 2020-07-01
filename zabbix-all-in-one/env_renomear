@@ -1,0 +1,13 @@
+ROOT_CENTOS=senha_root_so
+
+BOX_NAME=bento/centos-8.2
+INTERFACE_BRIDGE_HOST_FISICO=eth0
+SRV_HOSTNAME=zbx-all-in-one
+SRV_CPU=2
+SRV_RAM=3096
+SRV_IP=192.168.0.130
+
+MYSQL_ROOT_PASSWORD="senha_user_root"
+ZABBIX_USER="user_zabbix"
+ZABBIX_PASS="senha_user_zabbix"
+ZABBIX_BD="nome_do_bando_de_dados_zabbix"
