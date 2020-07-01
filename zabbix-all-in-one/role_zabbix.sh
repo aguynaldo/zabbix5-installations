@@ -13,10 +13,10 @@ ZABBIX_USER=$(read_var ZABBIX_USER /vagrant/.env)
 ZABBIX_PASS=$(read_var ZABBIX_PASS /vagrant/.env)
 ZABBIX_BD=$(read_var ZABBIX_BD /vagrant/.env)
 
-echo "Mostrando as constantes"
-echo $ZABBIX_BD
-echo $ZABBIX_USER
-echo $ZABBIX_PASS
+# echo "Mostrando as constantes"
+# echo $ZABBIX_BD
+# echo $ZABBIX_USER
+# echo $ZABBIX_PASS
 
 
 echo "[TASK 1] Add oficial zabbix repo"; sleep 3

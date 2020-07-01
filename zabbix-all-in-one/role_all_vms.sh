@@ -10,8 +10,8 @@ read_var() {
 ### Definindo as CONSTANTES para configurar o banco de dados
 ROOT_CENTOS=$(read_var ROOT_CENTOS /vagrant/.env)
 
-echo "SEnha do root"
-echo $ROOT_CENTOS
+# echo "SEnha do root"
+# echo $ROOT_CENTOS
 
 # Update hosts file
 echo "[TASK 1] Set correct timezone"; sleep 3
