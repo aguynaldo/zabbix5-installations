@@ -6,17 +6,17 @@ Multiple way to install zabbix 5 in Virtualbox VMs
 | - | - |
 | [zabbix-all-in-one](/zabbix-all-in-one/README.md) | Install mysql-server and zabbix-server and zabbix-frontend in only one server running CentOS-8.2. |
 | zabbix-three-layer | Install in different server mysql-server (one) and zabbix-server (one) and zabbix-frontend (other), all running CentOS-8.2 |
-| zabbix-all-in-one-docker | Install in different server mysql-server on CentOS and zabbix-server, zabbix-frontend and grafana in Docker Swarm stack. in only one server running CentOS-8.2. | 
+| zabbix-all-in-one-docker | Install in different server mysql-server on CentOS and zabbix-server, zabbix-frontend and grafana in Docker Swarm stack. in only one server running CentOS-8.2. |
 
 ## Requirements
 
-* vagrant 
-* vagrant plugin vagrant-env (vagrant plugin install vagrant-env)
-* virtualbox 6.0+
+* [Vagrant](https://www.vagrantup.com/)
+* [Vagrant plugin vagrant-env](https://github.com/gosuri/vagrant-env)
+* [Virtualbox 6.0+](https://www.virtualbox.org/)
 
 ### My environment
 
-These files were tested in 2 machines. 
+These files were tested in 2 machines.
 
 #### Debian 10
 
