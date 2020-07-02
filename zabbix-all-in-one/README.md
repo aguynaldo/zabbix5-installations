@@ -4,7 +4,7 @@ There are 2 ways to execute these scripts.
 
 ## Using Vagrant
 
-This scripts will to install mysql-server, zabbix-server, zabbix-frontend all in only one server.
+These scripts will to install mysql-server, zabbix-server, zabbix-frontend all in only one server.
 
 1. Clone this repository
 

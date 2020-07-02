@@ -1,0 +1,21 @@
+Boa Noite
+
+Estava com esse mesmo problema de conexão com o banco de dados, fiz o processo,
+1) Remover os serviço usando o comando "docker stack rm maratonazabbix"
+2) Fui na pasta "root/maratonazabbix/envs/zabbix-server/" e "root/maratonazabbix/envs/zabbix-frontend/" e dentro de cada uma vai ter um arquivo de configuração, eu abri o arquivo e substitui o IP pelo IP que eu ja tinha criado a maquina virtual.
+3) Com os arquivos alterados eu usei o comando "docker stack deploy -c docker-compose.yaml maratonazabbix" para criar os scripts e depois de um tempo eu verifiquei cada um dos 3 e os 3 ficaram funcionando.
+
+OBs.: Só que mesmo assim meu servidor zabbix não estava conseguindo se conectar ao banco, estava dando essa mesma mensagem **** MySQL server is not available. Waiting 5 seconds...
+
+Acessei o servidor de banco
+
+E refiz a permissão de usuário do zabbix, só que dessa vez eu coloquei o IP do meu servidor de banco e não o do que esta no video da aula,
+
+create user 'zabbix'@'172.30.30.233' identified with mysql_native_password by '2Maratona@Zabbix';
+grant all privileges on zabbix_maratona.* to 'zabbix'@'172.30.30.233';
+UPDATE mysql.user SET Super_Priv='Y' WHERE user='zabbix' AND host='172.30.30.233';
+flush privileges;
+
+Após a execução desse comando ai as tabelas começou a ser criadas. Caso mesmo assim continui dando erro ai você, para o serviço do docker systemctl stop docker, executa os passos de 1 a 3 e ativa o serviço do docker de novo.
+
+Estou usando o velho VirtualBox
