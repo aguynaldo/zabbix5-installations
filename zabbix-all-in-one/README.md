@@ -1,8 +1,8 @@
 # Instructions
 
-There are 2 ways to execute.
+There are 2 ways to execute these scripts.
 
-## Using Vagrant 
+## Using Vagrant
 
 This scripts will to install mysql-server, zabbix-server, zabbix-frontend all in only one server.
 
@@ -47,7 +47,6 @@ This scripts will to install mysql-server, zabbix-server, zabbix-frontend all in
 
 6. Open the browser and type http://YOUR_IP/zabbix
 
-
 **ATTENTION**  
 If some error occurring during the execution scripts you need destroy the VMs and execute the command "vagrant up" again.
 
@@ -67,3 +66,17 @@ If you don't want to use vagrant, you can copy all the .sh scripts and the .env 
 
 **ATTENTION**  
 You still need the .env file in the same directory as the .sh scripts.
+
+It's mandatory you edit all .sh scripts and change the path to env file if you will execute only the .sh scripts.
+
+Bellow an example.
+
+```bash
+### Setting the CONSTANTS using Vagrant (path to env file)
+ROOT_CENTOS=$(read_var ROOT_CENTOS /vagrant/.env)
+```
+
+```bash
+### Setting the CONSTANTS only .sh scripts (path to env file)
+ROOT_CENTOS=$(read_var ROOT_CENTOS .env)
+```
