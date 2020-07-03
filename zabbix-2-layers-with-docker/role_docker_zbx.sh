@@ -68,13 +68,15 @@ chown -R 472:472 /mnt/data-docker/grafana/data && \
 chmod -R 775 /mnt/data-docker/grafana && mkdir -p /mnt/data-docker/grafana/certs && \
 chown -R 472:472 /mnt/data-docker/grafana/certs
 
+
 echo "\n\n\n\n\n"
 echo "[TASK 13] Generating the frontend common.env file"; sleep 3
-bash /vagrant/gen_frontend_common.sh
+cd /vagrant
+bash gen_frontend_common.sh
 
 echo "\n\n\n\n\n"
 echo "[TASK 14]Generating the server common.env file"; sleep 3
-bash /vagrant/gen_server_common.sh
+bash gen_server_common.sh
 
 echo "\n\n\n\n\n"
 echo "[TASK 15] Starting stack on swarm"; sleep 3
