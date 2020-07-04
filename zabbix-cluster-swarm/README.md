@@ -1,1 +1,0 @@
-# Zabbix with cluster swarm 

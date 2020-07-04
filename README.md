@@ -7,7 +7,7 @@ Multiple way to install zabbix 5 in Virtualbox VMs
 | [zabbix-all-in-one](zabbix-all-in-one/README.md) | Install mysql-server and zabbix-server and zabbix-frontend in only one server running CentOS-8.2. | Done |
 | [zabbix-2-layers-with-docker](zabbix-2-layers-with-docker/README.md) | Create 2 VMs. One host with mysql-server and other with docker-ce. On docker swarm there are 3 services: zabbix-server, zabbix-frontend and grafana.| Done |
 | zabbix-3-layers | - | To do |
-| zabbix-cluster-swarm | - | To do |
+| [zabbix-ha-docker-swarm](zabbix-ha-docker-swarm/README.md) | - | Doing |
 
 ## Requirements
 

@@ -1,0 +1,56 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.env.enable
+  config.vm.box_check_update = false
+  config.vm.provision "shell", path:"role_all_vms.sh"
+
+  # NFS SERVER
+  config.vm.define ENV['NFS_HOSTNAME'] do |nfs|
+    nfs.vm.box = ENV['BOX_NAME']
+    nfs.vm.hostname = ENV['NFS_HOSTNAME']
+    nfs.vm.network "public_network", :bridge => ENV['INTERFACE_BRIDGE_HOST_FISICO'], ip: ENV['NSF_IP']
+
+    nfs.vm.provider "virtualbox" do |vb|
+      vb.name = ENV['NFS_HOSTNAME']
+      vb.memory = ENV['NFS_RAM']
+      vb.cpus = ENV['NFS_CPU']
+      vb.customize ["modifyvm", :id, "--groups", ENV['VBOX_GROUP_NAME']]
+    end
+    nfs.vm.provision "shell", path: "role_nfs.sh"
+  end
+  
+  
+  # MYSQL SERVER
+  config.vm.define ENV['MYSQL_HOSTNAME'] do |mysql|
+    mysql.vm.box = ENV['BOX_NAME']
+    mysql.vm.hostname = ENV['MYSQL_HOSTNAME']
+    mysql.vm.network "public_network", :bridge => ENV['INTERFACE_BRIDGE_HOST_FISICO'], ip: ENV['MYSQL_IP']
+
+    mysql.vm.provider "virtualbox" do |vb|
+      vb.name = ENV['MYSQL_HOSTNAME']
+      vb.memory = ENV['MYSQL_RAM']
+      vb.cpus = ENV['MYSQL_CPU']
+      vb.customize ["modifyvm", :id, "--groups", ENV['VBOX_GROUP_NAME']]
+    end
+    mysql.vm.provision "shell", path: "role_db.sh"
+  end
+
+  # DOCKER HOST 01
+  config.vm.define ENV['DH1_HOSTNAME'] do |dh01|
+    dh01.vm.box = ENV['BOX_NAME']
+    dh01.vm.hostname = ENV['DH1_HOSTNAME']
+    dh01.vm.network "public_network", :bridge => ENV['INTERFACE_BRIDGE_HOST_FISICO'], ip: ENV['DH1_IP']
+
+    dh01.vm.provider "virtualbox" do |vb|
+      vb.name = ENV['DH1_HOSTNAME']
+      vb.memory = ENV['DH1_RAM']
+      vb.cpus = ENV['DH1_CPU']
+      vb.customize ["modifyvm", :id, "--groups", ENV['VBOX_GROUP_NAME']]
+    end
+    dh01.vm.provision "shell", path: "role_nfs_client.sh"
+    dh01.vm.provision "shell", path: "role_docker_install.sh"
+  end
+
+end
