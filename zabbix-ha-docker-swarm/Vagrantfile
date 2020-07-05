@@ -51,6 +51,41 @@ Vagrant.configure("2") do |config|
     end
     dh01.vm.provision "shell", path: "role_nfs_client.sh"
     dh01.vm.provision "shell", path: "role_docker_install.sh"
+    dh01.vm.provision "shell", path: "role_docker_leader.sh"
+  end
+
+  # DOCKER HOST 02
+  config.vm.define ENV['DH2_HOSTNAME'] do |dh02|
+    dh02.vm.box = ENV['BOX_NAME']
+    dh02.vm.hostname = ENV['DH2_HOSTNAME']
+    dh02.vm.network "public_network", :bridge => ENV['INTERFACE_BRIDGE_HOST_FISICO'], ip: ENV['DH2_IP']
+
+    dh02.vm.provider "virtualbox" do |vb|
+      vb.name = ENV['DH2_HOSTNAME']
+      vb.memory = ENV['DH2_RAM']
+      vb.cpus = ENV['DH2_CPU']
+      vb.customize ["modifyvm", :id, "--groups", ENV['VBOX_GROUP_NAME']]
+    end
+    dh02.vm.provision "shell", path: "role_nfs_client.sh"
+    dh02.vm.provision "shell", path: "role_docker_install.sh"
+    dh02.vm.provision "shell", path: "role_docker_reachable.sh"
+  end
+
+  # DOCKER HOST 03
+  config.vm.define ENV['DH3_HOSTNAME'] do |dh03|
+    dh03.vm.box = ENV['BOX_NAME']
+    dh03.vm.hostname = ENV['DH3_HOSTNAME']
+    dh03.vm.network "public_network", :bridge => ENV['INTERFACE_BRIDGE_HOST_FISICO'], ip: ENV['DH3_IP']
+
+    dh03.vm.provider "virtualbox" do |vb|
+      vb.name = ENV['DH3_HOSTNAME']
+      vb.memory = ENV['DH3_RAM']
+      vb.cpus = ENV['DH3_CPU']
+      vb.customize ["modifyvm", :id, "--groups", ENV['VBOX_GROUP_NAME']]
+    end
+    dh03.vm.provision "shell", path: "role_nfs_client.sh"
+    dh03.vm.provision "shell", path: "role_docker_install.sh"
+    dh03.vm.provision "shell", path: "role_docker_reachable.sh"
   end
 
 end
