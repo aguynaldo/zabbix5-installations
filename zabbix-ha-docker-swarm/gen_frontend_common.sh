@@ -9,15 +9,16 @@ read_var() {
 
 ### ### Setting IP for Swarm
 ZABBIX_SRV_IP==$(read_var ZABBIX_SRV_IP /vagrant/.env)
-
-ZBX_HOSTNAME=$(read_var ZBX_HOSTNAME /vagrant/.env)
+#ZBX_HOSTNAME=$(read_var ZBX_HOSTNAME /vagrant/.env)
 MYSQL_IP=$(read_var MYSQL_IP /vagrant/.env)
 ZABBIX_USER=$(read_var ZABBIX_USER /vagrant/.env)
 ZABBIX_PASS=$(read_var ZABBIX_PASS /vagrant/.env)
 ZABBIX_DB=$(read_var ZABBIX_DB /vagrant/.env)
 ZBX_SERVER_NAME=$(read_var ZBX_SERVER_NAME /vagrant/.env)
+MOUNT_POINT_NFS=$(read_var MOUNT_POINT_NFS /vagrant/.env)
+STACK_NAME==$(read_var STACK_NAME /vagrant/.env)
 
-echo "ZBX_SERVER_HOST=maratonazabbix_$ZBX_HOSTNAME
+echo "ZBX_SERVER_HOST=$STACK_NAME-zabbix-server
 DB_SERVER_HOST=$MYSQL_IP
 MYSQL_USER=$ZABBIX_USER
 MYSQL_PASSWORD=$ZABBIX_PASS
@@ -26,5 +27,5 @@ PHP_TZ=America/Sao_Paulo
 TZ=America/Sao_Paulo
 ZBX_SERVER_NAME=$ZBX_SERVER_NAME
 ZBX_MEMORYLIMIT=512M
-" > /vagrant/deploy_zabbix_ha/envs/zabbix-frontend/common.env 
+" > $MOUNT_POINT_NFS/docker-files/envs/zabbix-frontend/common.env 
 

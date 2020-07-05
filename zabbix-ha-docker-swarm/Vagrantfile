@@ -69,6 +69,7 @@ Vagrant.configure("2") do |config|
     dh02.vm.provision "shell", path: "role_nfs_client.sh"
     dh02.vm.provision "shell", path: "role_docker_install.sh"
     dh02.vm.provision "shell", path: "role_docker_reachable.sh"
+    dh02.vm.provision "shell", path: "role_swarm_deploy.sh"
   end
 
   # DOCKER HOST 03
@@ -86,6 +87,25 @@ Vagrant.configure("2") do |config|
     dh03.vm.provision "shell", path: "role_nfs_client.sh"
     dh03.vm.provision "shell", path: "role_docker_install.sh"
     dh03.vm.provision "shell", path: "role_docker_reachable.sh"
+    #dh03.vm.provision "shell", path: "role_swarm_deploy.sh"
+  end
+
+  # HA PROXY
+  config.vm.define ENV['PRX_HOSTNAME'] do |prx|
+    prx.vm.box = ENV['BOX_NAME']
+    prx.vm.hostname = ENV['PRX_HOSTNAME']
+    prx.vm.network "public_network", :bridge => ENV['INTERFACE_BRIDGE_HOST_FISICO'], ip: ENV['PRX_IP']
+
+    prx.vm.provider "virtualbox" do |vb|
+      vb.name = ENV['PRX_HOSTNAME']
+      vb.memory = ENV['PRX_RAM']
+      vb.cpus = ENV['PRX_CPU']
+      vb.customize ["modifyvm", :id, "--groups", ENV['VBOX_GROUP_NAME']]
+    end
+    prx.vm.provision "shell", path: "role_ha_proxy.sh"
+    # prx.vm.provision "shell", path: "role_docker_install.sh"
+    # prx.vm.provision "shell", path: "role_docker_reachable.sh"
+    
   end
 
 end

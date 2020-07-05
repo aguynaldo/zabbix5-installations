@@ -1,4 +1,25 @@
-global
+#!/bin/bash
+
+### Function to read the constants of the .env file
+read_var() {
+    VAR=$(grep $1 $2 | xargs)
+    IFS="=" read -ra VAR <<< "$VAR"
+    echo ${VAR[1]}
+}
+
+### Setting the CONSTANT to set the root password (Operating system)
+DH1_HOSTNAME=$(read_var DH1_HOSTNAME /vagrant/.env)
+DH2_HOSTNAME=$(read_var DH2_HOSTNAME /vagrant/.env)
+DH3_HOSTNAME=$(read_var DH3_HOSTNAME /vagrant/.env)
+DH1_IP=$(read_var DH1_IP /vagrant/.env)
+DH2_IP=$(read_var DH2_IP /vagrant/.env)
+DH3_IP=$(read_var DH3_IP /vagrant/.env)
+
+# echo "Root password"
+# echo $ROOT_CENTOS
+
+echo "[TASK 1] Generating ha-proxy.cfg"; sleep 3
+echo "global
         log /dev/log    local0
         log /dev/log    local1 debug
         maxconn 2000
@@ -56,9 +77,9 @@ frontend traefik
 backend backend_traefik
         mode http
         cookie Zabbix prefix
-        server dockerhost-01 10.0.0.61:80 cookie dockerhost-01 check
-        server dockerhost-02 10.0.0.62:80 cookie dockerhost-02 check
-        server dockerhost-03 10.0.0.63:80 cookie dockerhost-03 check
+        server $DH1_HOSTNAME $DH1_IP:80 cookie $DH1_HOSTNAME check
+        server $DH2_HOSTNAME $DH2_IP:80 cookie $DH2_HOSTNAME check
+        server $DH3_HOSTNAME $DH3_IP:80 cookie $DH3_HOSTNAME check
         stats admin  if TRUE
         option tcp-check
 
@@ -69,8 +90,10 @@ frontend zabbix_server
 
 backend backend_zabbix_server
         mode tcp
-        server dockerhost-01 10.0.0.61:10051 check
-        server dockerhost-02 10.0.0.62:10051 check
-        server dockerhost-03 10.0.0.63:10051 check
+        server $DH1_HOSTNAME $DH1_IP:10051 check
+        server $DH2_HOSTNAME $DH2_IP:10051 check
+        server $DH3_HOSTNAME $DH3_IP:10051 check
         stats admin if TRUE
         option tcp-check
+
+" > /etc/haproxy/haproxy.cfg

@@ -9,6 +9,7 @@ read_var() {
 
 ### Setting the CONSTANT to set the root password (Operating system)
 ROOT_CENTOS=$(read_var ROOT_CENTOS /vagrant/.env)
+UTILS_4ALL_VMS=$(read_var UTILS_4ALL_VMS /vagrant/.env)
 
 # echo "Root password"
 # echo $ROOT_CENTOS
@@ -24,7 +25,7 @@ echo "\n\n\n\n\n"
 echo "[TASK 2] Install utils programs"; sleep 3
 dnf clean all
 dnf check-update
-dnf install -y net-tools vim nano epel-release wget curl tcpdump git
+dnf install -y $UTILS_4ALL_VMS
 
 # Setting root password
 echo "\n\n\n\n\n"

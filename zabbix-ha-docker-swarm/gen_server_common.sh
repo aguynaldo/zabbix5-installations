@@ -12,7 +12,7 @@ MYSQL_IP=$(read_var MYSQL_IP /vagrant/.env)
 ZABBIX_USER=$(read_var ZABBIX_USER /vagrant/.env)
 ZABBIX_PASS=$(read_var ZABBIX_PASS /vagrant/.env)
 ZABBIX_DB=$(read_var ZABBIX_DB /vagrant/.env)
-
+MOUNT_POINT_NFS=$(read_var MOUNT_POINT_NFS /vagrant/.env)
 
 echo "DB_SERVER_HOST=$MYSQL_IP
 DB_SERVER_PORT=3306
@@ -78,4 +78,4 @@ ZBX_TLSCAFILE=
 ZBX_TLSCRLFILE=
 ZBX_TLSCERTFILE=
 ZBX_TLSKEYFILE=
-" > /vagrant/deploy_zabbix_ha/envs/zabbix-server/common.env
+" > $MOUNT_POINT_NFS/docker-files/envs/zabbix-server/common.env

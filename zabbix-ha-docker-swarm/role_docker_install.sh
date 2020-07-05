@@ -22,6 +22,8 @@ echo "[TASK 5] Enabling the docker daemon on boot and execute it now"; sleep 3
 systemctl enable --now docker
 systemctl status docker
 
+##### REMOVER ESSE LINHA OU COMENTÁ-LA
+usermod -aG docker vagrant
 
 echo "[TASK 6] Enabling routing masquerade between containers"; sleep 3
 firewall-cmd --zone=public --add-masquerade --permanent
