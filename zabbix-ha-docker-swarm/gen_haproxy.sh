@@ -79,7 +79,7 @@ backend backend_traefik
         cookie Zabbix prefix
         server $DH1_HOSTNAME $DH1_IP:80 cookie $DH1_HOSTNAME check
         server $DH2_HOSTNAME $DH2_IP:80 cookie $DH2_HOSTNAME check
-        server $DH3_HOSTNAME $DH3_IP:80 cookie $DH3_HOSTNAME check
+        #server $DH3_HOSTNAME $DH3_IP:80 cookie $DH3_HOSTNAME check
         stats admin  if TRUE
         option tcp-check
 
@@ -92,7 +92,7 @@ backend backend_zabbix_server
         mode tcp
         server $DH1_HOSTNAME $DH1_IP:10051 check
         server $DH2_HOSTNAME $DH2_IP:10051 check
-        server $DH3_HOSTNAME $DH3_IP:10051 check
+        #server $DH3_HOSTNAME $DH3_IP:10051 check
         stats admin if TRUE
         option tcp-check
 
