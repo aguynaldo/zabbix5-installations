@@ -7,33 +7,36 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", path:"role_all_vms.sh"
 
   # Zabbix database
-  config.vm.define ENV['MYSQL_HOSTNAME'] do |zbxdb|
-    zbxdb.vm.box = ENV['BOX_NAME']
-    zbxdb.vm.hostname = ENV['MYSQL_HOSTNAME']
-    zbxdb.vm.network "public_network", :bridge => ENV['INTERFACE_BRIDGE_HOST_FISICO'], ip: ENV['SRV_BD_IP']
+  config.vm.define ENV['MYSQL_HOSTNAME'] do |dbnfs|
+    dbnfs.vm.box = ENV['BOX_NAME']
+    dbnfs.vm.hostname = ENV['MYSQL_HOSTNAME']
+    dbnfs.vm.network "public_network", :bridge => ENV['INTERFACE_BRIDGE_HOST_FISICO'], ip: ENV['SRV_DB_IP']
 
-    zbxdb.vm.provider "virtualbox" do |vb|
+    dbnfs.vm.provider "virtualbox" do |vb|
       vb.name = ENV['MYSQL_HOSTNAME']
       vb.memory = ENV['MYSQL_RAM']
       vb.cpus = ENV['MYSQL_CPU']
-      vb.customize ["modifyvm", :id, "--groups", "/zabbix5-DOCKER-ALL-IN-ONE"]
+      vb.customize ["modifyvm", :id, "--groups", ENV['VBOX_GROUP_NAME']]
     end
-    zbxdb.vm.provision "shell", path: "role_db.sh"
+    dbnfs.vm.provision "shell", path: "role_nfs_server.sh"
+    dbnfs.vm.provision "shell", path: "role_db.sh"
   end
 
   # Zabbix server + frontend + grafana
-  config.vm.define ENV['ZBX_HOSTNAME'] do |zbxsrv|
-    zbxsrv.vm.box = ENV['BOX_NAME']
-    zbxsrv.vm.hostname = ENV['ZBX_HOSTNAME']
-    zbxsrv.vm.network "public_network", :bridge => ENV['INTERFACE_BRIDGE_HOST_FISICO'], ip: ENV['ZABBIX_SRV_IP']
+  config.vm.define ENV['DOCKER_HOSTNAME'] do |docker|
+    docker.vm.box = ENV['BOX_NAME']
+    docker.vm.hostname = ENV['DOCKER_HOSTNAME']
+    docker.vm.network "public_network", :bridge => ENV['INTERFACE_BRIDGE_HOST_FISICO'], ip: ENV['DOCKER_SRV_IP']
 
-    zbxsrv.vm.provider "virtualbox" do |vb|
-      vb.name = ENV['ZBX_HOSTNAME']
-      vb.memory = ENV['ZBX_RAM']
-      vb.cpus = ENV['ZBX_CPU']
-      vb.customize ["modifyvm", :id, "--groups", "/zabbix5-DOCKER-ALL-IN-ONE"]
+    docker.vm.provider "virtualbox" do |vb|
+      vb.name = ENV['DOCKER_HOSTNAME']
+      vb.memory = ENV['DOCKER_RAM']
+      vb.cpus = ENV['DOCKER_CPU']
+      vb.customize ["modifyvm", :id, "--groups", ENV['VBOX_GROUP_NAME']]
     end
-    zbxsrv.vm.provision "shell", path: "role_docker_zbx.sh"
+    docker.vm.provision "shell", path: "role_nfs_client.sh"
+    docker.vm.provision "shell", path: "role_docker.sh"
+    docker.vm.provision "shell", path: "role_swarm_deploy.sh"
   end
 
 end

@@ -1,4 +1,18 @@
-version: "3.7"
+#!/bin/bash
+
+### Function to read the constants of the .env file
+read_var() {
+    VAR=$(grep $1 $2 | xargs)
+    IFS="=" read -ra VAR <<< "$VAR"
+    echo ${VAR[1]}
+}
+
+### ### Setting IP for Swarm
+MOUNT_POINT_NFS=$(read_var MOUNT_POINT_NFS /vagrant/.env)
+
+echo "vou salvar o $MOUNT_POINT_NFS/docker-files/docker-compose.yaml"
+
+echo "version: \"3.7\"
 
 x-deploy: &template-deploy
   replicas: 1
@@ -14,21 +28,21 @@ services:
     env_file: 
       - ./envs/zabbix-server/common.env
     networks:
-      - "monitoring-network"
+      - \"monitoring-network\"
     volumes:
-        - ./data_internal/zabbix-server/externalscripts:/usr/lib/zabbix/externalscripts
-        - ./data_internal/zabbix-server/alertscripts:/usr/lib/zabbix/alertscripts
+        - $MOUNT_POINT_NFS/zabbix-server/externalscripts:/usr/lib/zabbix/externalscripts:ro
+        - $MOUNT_POINT_NFS/zabbix-server/alertscripts:/usr/lib/zabbix/alertscripts:ro
     ports:
-      - "10051:10051"
+      - \"10051:10051\"
     deploy: *template-deploy
   zabbix-frontend:
     image: zabbix/zabbix-web-nginx-mysql:alpine-5.0.1
     env_file: 
       - ./envs/zabbix-frontend/common.env
     ports:
-      - "80:8080"
+      - \"80:8080\"
     networks:
-      - "monitoring-network"
+      - \"monitoring-network\"
     deploy: *template-deploy
   grafana:
     image: grafana/grafana:7.0.3
@@ -37,11 +51,12 @@ services:
     volumes:
       - /mnt/data-docker/grafana/data:/var/lib/grafana
     networks:
-      - "monitoring-network"
+      - \"monitoring-network\"
     ports:
-      - "3000:3000"
+      - \"3000:3000\"
     deploy: *template-deploy
 
 networks: 
   monitoring-network:
     external: true
+" > $MOUNT_POINT_NFS/docker-files/docker-compose.yaml

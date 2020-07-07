@@ -8,17 +8,17 @@ read_var() {
 }
 
 ### ### Setting IP for Swarm
-SRV_BD_IP=$(read_var SRV_BD_IP /vagrant/.env)
+SRV_DB_IP=$(read_var SRV_DB_IP /vagrant/.env)
 ZABBIX_USER=$(read_var ZABBIX_USER /vagrant/.env)
 ZABBIX_PASS=$(read_var ZABBIX_PASS /vagrant/.env)
-ZABBIX_BD=$(read_var ZABBIX_BD /vagrant/.env)
+ZABBIX_DB=$(read_var ZABBIX_DB /vagrant/.env)
+MOUNT_POINT_NFS=$(read_var MOUNT_POINT_NFS /vagrant/.env)
 
-
-echo "DB_SERVER_HOST=$SRV_BD_IP
+echo "DB_SERVER_HOST=$SRV_DB_IP
 DB_SERVER_PORT=3306
 MYSQL_USER=$ZABBIX_USER
 MYSQL_PASSWORD=$ZABBIX_PASS
-MYSQL_DATABASE=$ZABBIX_BD
+MYSQL_DATABASE=$ZABBIX_DB
 ZBX_TIMEOUT=30
 ZBX_LISTENIP=
 # Available since 3.4.0
@@ -78,4 +78,4 @@ ZBX_TLSCAFILE=
 ZBX_TLSCRLFILE=
 ZBX_TLSCERTFILE=
 ZBX_TLSKEYFILE=
-" > /vagrant/maratonazabbix/envs/zabbix-server/common.env
+" > $MOUNT_POINT_NFS/docker-files/envs/zabbix-server/common.env

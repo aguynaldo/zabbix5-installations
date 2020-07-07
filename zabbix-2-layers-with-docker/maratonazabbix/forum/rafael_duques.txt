@@ -1,7 +1,0 @@
-Comentario do João Victor aqui do grupo:
-
-1) Remover os serviço usando o comando "docker stack rm maratonazabbix"
-2) Fui na pasta "root/maratonazabbix/envs/zabbix-server/" e "root/maratonazabbix/envs/zabbix-frontend/" e dentro de cada uma vai ter um arquivo de configuração, eu abri o arquivo e substitui o IP pelo IP que eu ja tinha criado a maquina virtual.
-3) Com os arquivos alterados eu usei o comando "docker stack deploy -c docker-compose.yaml maratonazabbix" para criar os scripts e depois de um tempo eu verifiquei cada um dos 3 e os 3 ficaram funcionando.
-
-Caso o seu ainda não funcione reinicie o serviço do MYSQL no servidor de banco de dados e verifique se os serviços começaram a comunicar com o banco, qualquer coisa manda um print do erro que o seu esta dando.
