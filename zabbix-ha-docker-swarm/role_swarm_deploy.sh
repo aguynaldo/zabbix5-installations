@@ -10,7 +10,6 @@ read_var() {
 MOUNT_POINT_NFS=$(read_var MOUNT_POINT_NFS /vagrant/.env)
 STACK_NAME=$(read_var STACK_NAME /vagrant/.env)
 
-
 echo "[TASK 1] Create folders for grafana"; sleep 3
 mkdir -p $MOUNT_POINT_NFS/grafana/data && \
 chown -R 472:472 $MOUNT_POINT_NFS/grafana/data && \
@@ -26,7 +25,6 @@ echo "[TASK 3] Create folders for docker envs files"; sleep 3
 mkdir -p $MOUNT_POINT_NFS/docker-files/envs/zabbix-server
 mkdir -p $MOUNT_POINT_NFS/docker-files/envs/zabbix-frontend
 
-
 echo "[TASK 4] Generating the frontend common.env file"; sleep 3
 cd /vagrant
 bash gen_frontend_common.sh
@@ -40,5 +38,3 @@ bash gen_docker-compose.sh
 echo "[TASK 7] Starting stack on swarm"; sleep 3
 cd $MOUNT_POINT_NFS/docker-files
 docker stack deploy -c docker-compose.yaml $STACK_NAME
-
-#docker stack deploy -c docker-compose.yaml poc-asf

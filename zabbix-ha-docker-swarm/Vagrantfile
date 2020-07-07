@@ -10,7 +10,7 @@ Vagrant.configure("2") do |config|
   config.vm.define ENV['NFS_HOSTNAME'] do |nfs|
     nfs.vm.box = ENV['BOX_NAME']
     nfs.vm.hostname = ENV['NFS_HOSTNAME']
-    nfs.vm.network "public_network", :bridge => ENV['INTERFACE_BRIDGE_HOST_FISICO'], ip: ENV['NSF_IP']
+    nfs.vm.network "public_network", :bridge => ENV['INTERFACE_BRIDGE_HOST_FISICO'], ip: ENV['NFS_IP']
 
     nfs.vm.provider "virtualbox" do |vb|
       vb.name = ENV['NFS_HOSTNAME']
@@ -18,7 +18,7 @@ Vagrant.configure("2") do |config|
       vb.cpus = ENV['NFS_CPU']
       vb.customize ["modifyvm", :id, "--groups", ENV['VBOX_GROUP_NAME']]
     end
-    nfs.vm.provision "shell", path: "role_nfs.sh"
+    nfs.vm.provision "shell", path: "role_nfs_server.sh"
   end
   
   
@@ -73,23 +73,23 @@ Vagrant.configure("2") do |config|
     dh02.vm.provision "shell", path: "role_swarm_deploy.sh"
   end
 
-  # # DOCKER HOST 03
-  # config.vm.define ENV['DH3_HOSTNAME'] do |dh03|
-  #   dh03.vm.box = ENV['BOX_NAME']
-  #   dh03.vm.hostname = ENV['DH3_HOSTNAME']
-  #   dh03.vm.network "public_network", :bridge => ENV['INTERFACE_BRIDGE_HOST_FISICO'], ip: ENV['DH3_IP']
+  # DOCKER HOST 03
+  config.vm.define ENV['DH3_HOSTNAME'] do |dh03|
+    dh03.vm.box = ENV['BOX_NAME']
+    dh03.vm.hostname = ENV['DH3_HOSTNAME']
+    dh03.vm.network "public_network", :bridge => ENV['INTERFACE_BRIDGE_HOST_FISICO'], ip: ENV['DH3_IP']
 
-  #   dh03.vm.provider "virtualbox" do |vb|
-  #     vb.name = ENV['DH3_HOSTNAME']
-  #     vb.memory = ENV['DH3_RAM']
-  #     vb.cpus = ENV['DH3_CPU']
-  #     vb.customize ["modifyvm", :id, "--groups", ENV['VBOX_GROUP_NAME']]
-  #   end
-  #   dh03.vm.provision "shell", path: "role_nfs_client.sh"
-  #   dh03.vm.provision "shell", path: "role_docker_install.sh"
-  #   dh03.vm.provision "shell", path: "role_docker_reachable.sh"
-  #   #dh03.vm.provision "shell", path: "role_swarm_deploy.sh"
-  # end
+    dh03.vm.provider "virtualbox" do |vb|
+      vb.name = ENV['DH3_HOSTNAME']
+      vb.memory = ENV['DH3_RAM']
+      vb.cpus = ENV['DH3_CPU']
+      vb.customize ["modifyvm", :id, "--groups", ENV['VBOX_GROUP_NAME']]
+    end
+    dh03.vm.provision "shell", path: "role_nfs_client.sh"
+    dh03.vm.provision "shell", path: "role_docker_install.sh"
+    dh03.vm.provision "shell", path: "role_docker_reachable.sh"
+    #dh03.vm.provision "shell", path: "role_swarm_deploy.sh"
+  end
 
   # HA PROXY
   config.vm.define ENV['PRX_HOSTNAME'] do |prx|
@@ -103,10 +103,7 @@ Vagrant.configure("2") do |config|
       vb.cpus = ENV['PRX_CPU']
       vb.customize ["modifyvm", :id, "--groups", ENV['VBOX_GROUP_NAME']]
     end
-    prx.vm.provision "shell", path: "role_ha_proxy.sh"
-    # prx.vm.provision "shell", path: "role_docker_install.sh"
-    # prx.vm.provision "shell", path: "role_docker_reachable.sh"
-    
+    prx.vm.provision "shell", path: "role_ha_proxy.sh"    
   end
 
 end

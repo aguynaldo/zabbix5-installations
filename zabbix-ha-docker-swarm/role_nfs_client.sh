@@ -9,9 +9,8 @@ read_var() {
 
 ### Defining the CONSTANTS to set the database
 DATADIR=$(read_var DATADIR /vagrant/.env)
-NSF_IP=$(read_var NSF_IP /vagrant/.env)
+NFS_IP=$(read_var NFS_IP /vagrant/.env)
 MOUNT_POINT_NFS=$(read_var MOUNT_POINT_NFS /vagrant/.env)
-
 
 echo "[TASK 1] Installing nfs-utils"; sleep 3
 dnf install -y nfs-utils
@@ -21,7 +20,8 @@ mkdir -p $MOUNT_POINT_NFS
 
 echo "[TASK 3] Add mount poing in fstab file."; sleep 3
 echo "#Add mount point to nfs-server shared folder. 
-$NSF_IP:$DATADIR   $MOUNT_POINT_NFS    nfs     defaults    0 0" >> /etc/fstab
+$NFS_IP:$DATADIR   $MOUNT_POINT_NFS    nfs     defaults    0 0" >> /etc/fstab
+cat /etc/fstab
 
 echo "[TASK 4] Reading fstab file and mounting all mount points."; sleep 3
 systemctl daemon-reload

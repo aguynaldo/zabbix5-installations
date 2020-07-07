@@ -7,7 +7,6 @@ read_var() {
     echo ${VAR[1]}
 }
 
-### Setting the CONSTANT to set the root password (Operating system)
 ROOT_CENTOS=$(read_var ROOT_CENTOS /vagrant/.env)
 UTILS_4ALL_VMS=$(read_var UTILS_4ALL_VMS /vagrant/.env)
 
@@ -17,18 +16,15 @@ UTILS_4ALL_VMS=$(read_var UTILS_4ALL_VMS /vagrant/.env)
 echo "[TASK 1] Install tools for compile ha-proxy"; sleep 3
 dnf install -y gcc pcre-devel tar make 
 
-
 echo "[TASK 2] Downloading haproxy 2"; sleep 3
 cd /tmp
 wget http://www.haproxy.org/download/2.0/src/haproxy-2.0.14.tar.gz -O haproxy.tar.gz
-
 
 echo "[TASK 3] Compiling haproxy 2"; sleep 3
 tar xzvf haproxy.tar.gz -C /tmp
 cd haproxy-2.0.14/
 make TARGET=linux-glibc
 make install
-
 
 #Configurações finais
 echo "[TASK 4] Setting haproxy 2"; sleep 3
