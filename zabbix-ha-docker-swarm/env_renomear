@@ -10,44 +10,49 @@ MYSQL_ROOT_PASSWORD="Z@bb1x5z4bbiX"
 ZABBIX_USER="zabbix"
 ZABBIX_PASS="S3nh4#Zabbix5"
 ZABBIX_DB="dbzabbix"
- 
-ZBX_SERVER_NAME="POC-ITONBUSINESS"
-STACK_NAME="itb"
 
+ZBX_SERVER_NAME="ASF-ITSolutions"
+STACK_NAME="asf"
+
+# DNS entries for traefik settings
 DNS_TRAEFIK="traefik.zabbix5.local"
 DNS_FRONTEND="frontend.zabbix5.local"
 DNS_GRAFANA="grafana.zabbix5.local"
 
+# Mysql database server settings
 MYSQL_HOSTNAME=mysql-server
 MYSQL_CPU=2
-MYSQL_RAM=2048
+MYSQL_RAM=4096
 MYSQL_IP=192.168.0.180
 
+# NFS server settings
 NFS_HOSTNAME=nfs-server
 NFS_CPU=2
 NFS_RAM=1024
-NSF_IP=192.168.0.181
+NFS_IP=192.168.0.181
 DATADIR="/data/data-docker"
 
-
+# Proxy settings
 PRX_HOSTNAME=ha-proxy
 PRX_CPU=1
 PRX_RAM=1024
 PRX_IP=192.168.0.190
 
-
+# Mount point for docker-hosts
 MOUNT_POINT_NFS="/mnt/data-docker"
+
+# Docker-hosts settings
 DH1_HOSTNAME=docker-host01
 DH1_CPU=1
-DH1_RAM=1024
+DH1_RAM=2048
 DH1_IP=192.168.0.191
 
 DH2_HOSTNAME=docker-host02
 DH2_CPU=1
-DH2_RAM=1024
+DH2_RAM=2048
 DH2_IP=192.168.0.192
 
 DH3_HOSTNAME=docker-host03
 DH3_CPU=1
-DH3_RAM=1024
+DH3_RAM=2048
 DH3_IP=192.168.0.193
