@@ -80,6 +80,6 @@ SQL9="UPDATE mysql.user SET Super_Priv='Y' WHERE user='${ZABBIX_FRONTEND_USER}' 
 SQL10="flush privileges;"
 mysql -h localhost -u root -p${MYSQL_ROOT_PASSWORD} -e "${SQL1}${SQL2}${SQL3}${SQL4}${SQL5}${SQL6}${SQL7}${SQL8}${SQL9}${SQL10}"
 
-echo "[TASK 6] Adding permissions for mysql on the Firewall"; sleep 3
+echo "[TASK 6] Adding permissions for mysql on Firewall"; sleep 3
 firewall-cmd --permanent --add-port=3306/tcp
 firewall-cmd --reload

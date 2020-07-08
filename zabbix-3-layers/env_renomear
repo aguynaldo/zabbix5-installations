@@ -6,7 +6,7 @@ VBOX_GROUP_NAME="/ZABBIX-3LAYERS"
 
 UTILS_4ALL_VMS="net-tools vim nano epel-release wget curl"
 
-# ZBX_SERVER_NAME="IT-On-Business"
+ZBX_SERVER_NAME="Zabbix All-in-One"
 
 MYSQL_ROOT_PASSWORD="Z@bb1x5z4bbiX"
 ZABBIX_SERVER_USER="user_zbx_server"
