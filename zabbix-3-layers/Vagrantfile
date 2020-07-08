@@ -1,0 +1,54 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.env.enable
+  config.vm.box_check_update = false
+  config.vm.provision "shell", path:"role_all_vms.sh"
+  config.vm.provision "shell", path:"role_zabbix-agent.sh"
+
+  # Zabbix database
+  config.vm.define ENV['MYSQL_HOSTNAME'] do |db_server|
+    db_server.vm.box = ENV['BOX_NAME']
+    db_server.vm.hostname = ENV['MYSQL_HOSTNAME']
+    db_server.vm.network "public_network", :bridge => ENV['INTERFACE_BRIDGE_HOST_FISICO'], ip: ENV['SRV_DB_IP']
+
+    db_server.vm.provider "virtualbox" do |vb|
+      vb.name = ENV['MYSQL_HOSTNAME']
+      vb.memory = ENV['MYSQL_RAM']
+      vb.cpus = ENV['MYSQL_CPU']
+      vb.customize ["modifyvm", :id, "--groups", ENV['VBOX_GROUP_NAME']]
+    end
+    db_server.vm.provision "shell", path: "role_db.sh"
+  end
+
+  # Zabbix server 
+  config.vm.define ENV['ZABBIX_HOSTNAME'] do |zabbix_server|
+    zabbix_server.vm.box = ENV['BOX_NAME']
+    zabbix_server.vm.hostname = ENV['ZABBIX_HOSTNAME']
+    zabbix_server.vm.network "public_network", :bridge => ENV['INTERFACE_BRIDGE_HOST_FISICO'], ip: ENV['ZABBIX_SRV_IP']
+
+    zabbix_server.vm.provider "virtualbox" do |vb|
+      vb.name = ENV['ZABBIX_HOSTNAME']
+      vb.memory = ENV['ZABBIX_RAM']
+      vb.cpus = ENV['ZABBIX_CPU']
+      vb.customize ["modifyvm", :id, "--groups", ENV['VBOX_GROUP_NAME']]
+    end
+    zabbix_server.vm.provision "shell", path: "role_zabbix-server.sh"
+  end
+
+  #frontend + grafana???
+  config.vm.define ENV['FRONTEND_HOSTNAME'] do |frontend|
+    frontend.vm.box = ENV['BOX_NAME']
+    frontend.vm.hostname = ENV['FRONTEND_HOSTNAME']
+    frontend.vm.network "public_network", :bridge => ENV['INTERFACE_BRIDGE_HOST_FISICO'], ip: ENV['FRONTEND_SRV_IP']
+
+    frontend.vm.provider "virtualbox" do |vb|
+      vb.name = ENV['FRONTEND_HOSTNAME']
+      vb.memory = ENV['FRONTEND_RAM']
+      vb.cpus = ENV['FRONTEND_CPU']
+      vb.customize ["modifyvm", :id, "--groups", ENV['VBOX_GROUP_NAME']]
+    end
+    frontend.vm.provision "shell", path: "role_zabbix-frontend.sh"
+  end
+end
