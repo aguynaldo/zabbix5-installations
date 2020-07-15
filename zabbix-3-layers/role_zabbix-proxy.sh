@@ -23,7 +23,8 @@ sed -i 's/^Server=127.0.0.1$/Server='$ZABBIX_SRV_IP'/' /etc/zabbix/zabbix_proxy.
 sed -i 's/^ServerActive=127.0.0.1$/ServerActive='$ZABBIX_SRV_IP'/' /etc/zabbix/zabbix_proxy.conf
 sed -i 's/Hostname=Zabbix proxy/# Hostname=Zabbix proxy/' /etc/zabbix/zabbix_proxy.conf
 sed -i 's/# HostnameItem=system.hostname/HostnameItem=system.hostname/' /etc/zabbix/zabbix_proxy.conf
-sed -i 's+DBName=zabbix_proxy+DBName=/var/lib/zabbix/zabbix_proxy+' /etc/zabbix/zabbix_proxy.conf
+sed -i 's+DBName=zabbix_proxy+DBName=/var/lib/zabbix/zabbix_proxy.db+' /etc/zabbix/zabbix_proxy.conf
+sed -i 's/DBUser=zabbix/# DBUser=zabbix/' /etc/zabbix/zabbix_proxy.conf
 sed -i 's/# ConfigFrequency=3600/ConfigFrequency=300/' /etc/zabbix/zabbix_proxy.conf
 
 

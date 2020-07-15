@@ -5,7 +5,7 @@ Vagrant.configure("2") do |config|
   config.env.enable
   config.vm.box_check_update = false
   config.vm.provision "shell", path:"role_all_vms.sh"
-  config.vm.provision "shell", path:"role_zabbix-agent.sh"
+  #config.vm.provision "shell", path:"role_zabbix-agent.sh"
 
   # Zabbix database
   config.vm.define ENV['MYSQL_HOSTNAME'] do |db_server|
