@@ -51,4 +51,19 @@ Vagrant.configure("2") do |config|
     end
     frontend.vm.provision "shell", path: "role_zabbix-frontend.sh"
   end
+
+  # Zabbix proxy
+  config.vm.define ENV['PROXY01_HOSTNAME'] do |zabbix_proxy|
+    zabbix_proxy.vm.box = ENV['BOX_NAME']
+    zabbix_proxy.vm.hostname = ENV['PROXY01_HOSTNAME']
+    zabbix_proxy.vm.network "public_network", :bridge => ENV['INTERFACE_BRIDGE_HOST_FISICO'], ip: ENV['PROXY01_SRV_IP']
+
+    zabbix_proxy.vm.provider "virtualbox" do |vb|
+      vb.name = ENV['PROXY01_HOSTNAME']
+      vb.memory = ENV['PROXY01_RAM']
+      vb.cpus = ENV['PROXY01_CPU']
+      vb.customize ["modifyvm", :id, "--groups", ENV['VBOX_GROUP_NAME']]
+    end
+    zabbix_proxy.vm.provision "shell", path: "role_zabbix-proxy.sh"
+  end
 end
