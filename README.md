@@ -1,6 +1,6 @@
 # zabbix5-installations
 
-Multiple way to install zabbix 5 in Virtualbox VMs
+Multiple way to install zabbix 5 in Virtualbox VMs.
 
 | Folders | Installation type |  Status |
 | - | - | - |
